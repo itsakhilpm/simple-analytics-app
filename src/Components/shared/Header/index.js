@@ -25,7 +25,7 @@ function Header() {
 		<div className="top-nav">
 			<Menu secondary>
 				<Container>
-					<Menu.Item className="logo">Dashboard</Menu.Item>
+					<Menu.Item className="logo">Simple Dashboard</Menu.Item>
 					<Menu.Item name="submit">DummyLink</Menu.Item>
 					<Menu.Menu position="right">
 						{!userAuthenticated ? (

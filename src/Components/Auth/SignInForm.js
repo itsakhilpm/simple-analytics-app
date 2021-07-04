@@ -24,17 +24,19 @@ function SignInForm() {
 		(state) => state.user.userAuthenticated
 	);
 	const handleFormSubmit = () => {
-        dispatch({
-            payload:{
-                loading:true,
-            },
-            type:'LOADER',
-        })
-		dispatch(
-			userSignIn(emailObj.emailId, passwordObj.password, rememberMe)
-		).catch((error) => {
-			setIsCredentialsWrong(true);
-		});
+        if(emailObj.emailId && passwordObj.password){
+            dispatch({
+                payload:{
+                    loading:true,
+                },
+                type:'LOADER',
+            })
+            dispatch(
+                userSignIn(emailObj.emailId, passwordObj.password, rememberMe)
+            ).catch((error) => {
+                setIsCredentialsWrong(true);
+            });
+        }
 	};
 	const handleInputChange = (e) => {
 		const {
