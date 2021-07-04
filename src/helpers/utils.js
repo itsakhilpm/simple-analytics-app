@@ -1,3 +1,7 @@
+// Regural expression to verify a valid email address
+const emailRgx =
+	/^(([^<>()\[\]\\.,;:\s@']+(\.[^<>()\[\]\\.,;:\s@']+)*)|('.+'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
 function getLocalStorage(name) {
 	if (typeof Storage !== 'undefined') {
 		return localStorage.getItem(name);
@@ -39,21 +43,30 @@ const get = (name, type, serverCookies = null) => {
  */
 
 function convertUnderScoreToSpace(string) {
-	return string.replace(/_/g, ' ');;
+	return string.replace(/_/g, ' ');
 }
 /**
-   * Return a Random color hexa code
-   * @return {string} Random color code
-   */
+ * Return a Random color hexa code
+ * @return {string} Random color code
+ */
 
 function getRandomColor() {
-    var letters = '0123456789ABCDEF';
-    var color = '#';
-    for (var i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-  }
+	var letters = '0123456789ABCDEF';
+	var color = '#';
+	for (var i = 0; i < 6; i++) {
+		color += letters[Math.floor(Math.random() * 16)];
+	}
+	return color;
+}
+// Check if email address is valid
+function isValidEmail(email) {
+	return emailRgx.test(String(email).trim());
+}
+
+// Check if password have length of 5
+function isValidPassword(pwd) {
+    return pwd.length >= 5;
+}
 
 const storage = {
 	get,
@@ -61,4 +74,4 @@ const storage = {
 	unset,
 };
 
-export { storage, convertUnderScoreToSpace, getRandomColor };
+export { storage, convertUnderScoreToSpace, getRandomColor, isValidEmail, isValidPassword };

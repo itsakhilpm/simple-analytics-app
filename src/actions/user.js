@@ -14,7 +14,6 @@ const userSignIn = (email, password, rememberMe) => dispatch =>{
                 type: actionTypes.USER_LOGGED_IN,
             })
         }
-    }).catch((error) =>{
     })
 }
 

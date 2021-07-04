@@ -98,3 +98,9 @@
 .ui.active.transition.visible.inverted.dimmer{
     position: fixed;
 }
+.error-message{
+    color: #FF0000;
+    font-size: 12px;
+    line-height: 15px;
+    margin-top: 10px;
+}

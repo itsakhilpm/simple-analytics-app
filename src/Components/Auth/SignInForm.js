@@ -3,19 +3,71 @@ import { Button, Checkbox, Form, Grid, Header } from 'semantic-ui-react';
 import { userSignIn } from '../../actions/user';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { storage } from '../../helpers/utils';
+import { storage, isValidEmail, isValidPassword } from '../../helpers/utils';
 
 function SignInForm() {
 	const dispatch = useDispatch();
 	const history = useHistory();
-    const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
-    const [rememberMe, setRemeberMe] = useState(true);
+	const [emailObj, setEmailObj] = useState({
+		emailId: '',
+		isEmailValid: true,
+	});
+    const [isCredentialsWrong, setIsCredentialsWrong] = useState(false);
+
+	const [passwordObj, setPasswordObj] = useState({
+		password: '',
+		isPasswordValid: true,
+	});
+	const [rememberMe, setRemeberMe] = useState(true);
+
 	const userAuthenticated = useSelector(
 		(state) => state.user.userAuthenticated
 	);
 	const handleFormSubmit = () => {
-		dispatch(userSignIn(email, password, rememberMe));
+		dispatch(
+			userSignIn(emailObj.emailId, passwordObj.password, rememberMe)
+		).catch((error)=>{
+            setIsCredentialsWrong(true);
+        });
+	};
+	const handleInputChange = (e) => {
+		const {
+			target: { value, name },
+		} = e;
+		switch (name) {
+			case 'email':
+				setEmailObj((prevState) => ({ ...prevState, emailId: value }));
+				break;
+			case 'password':
+				setPasswordObj((prevState) => ({
+					...prevState,
+					password: value,
+				}));
+				break;
+			default:
+				break;
+		}
+	};
+	const handleInputBlur = (e) => {
+		const {
+			target: { value, name },
+		} = e;
+        setIsCredentialsWrong(false);
+		switch (name) {
+			case 'email':
+				const isEmailValid = isValidEmail(value);
+				setEmailObj((prevState) => ({ ...prevState, isEmailValid }));
+				break;
+			case 'password':
+				const isPasswordValid = isValidPassword(value);
+				setPasswordObj((prevState) => ({
+					...prevState,
+					isPasswordValid,
+				}));
+				break;
+			default:
+				break;
+		}
 	};
 	if (userAuthenticated || storage.get('authToken', 'local')) {
 		history.push('/dashboard');
@@ -34,10 +86,13 @@ function SignInForm() {
 							iconPosition="left"
 							placeholder="E-mail address"
 							name="email"
-							value={email}
+							value={emailObj.emailId}
 							type="text"
 							onChange={(e) => {
-								setEmail(e.target.value);
+								handleInputChange(e);
+							}}
+							onBlur={(e) => {
+								handleInputBlur(e);
 							}}
 						/>
 						<Form.Input
@@ -47,15 +102,49 @@ function SignInForm() {
 							placeholder="Password"
 							type="password"
 							name="password"
-							value={password}
+							value={passwordObj.password}
 							onChange={(e) => {
-								setPassword(e.target.value);
+								handleInputChange(e);
+							}}
+							onBlur={(e) => {
+								handleInputBlur(e);
 							}}
 						/>
 						<Form.Field>
-							<Checkbox label="Remember Me" checked={rememberMe} onClick={()=>{setRemeberMe(!rememberMe)}} />
+							<Checkbox
+								label="Remember Me"
+								checked={rememberMe}
+								onClick={() => {
+									setRemeberMe(!rememberMe);
+								}}
+							/>
 						</Form.Field>
-						<Button fluid size="large" type="submit">
+						{!emailObj.isEmailValid && (
+							<p className="error-message">
+								Please check the email
+							</p>
+						)}
+						{!passwordObj.isPasswordValid && (
+							<p className="error-message">
+								Please check the password
+							</p>
+						)}
+                        {isCredentialsWrong && (
+							<p className="error-message">
+								Please check the credentials
+							</p>
+						)}
+						<Button
+							fluid
+							basic
+							size="large"
+							type="submit"
+							color="teal"
+							disabled={
+								!emailObj.isEmailValid ||
+								!passwordObj.isPasswordValid
+							}
+						>
 							Login
 						</Button>
 					</Form>
