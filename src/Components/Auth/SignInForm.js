@@ -35,6 +35,12 @@ function SignInForm() {
                 userSignIn(emailObj.emailId, passwordObj.password, rememberMe)
             ).catch((error) => {
                 setIsCredentialsWrong(true);
+                dispatch({
+                    payload:{
+                        loading:false,
+                    },
+                    type:'LOADER',
+                })
             });
         }
 	};
