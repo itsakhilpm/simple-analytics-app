@@ -1,24 +1,19 @@
 import React from 'react';
 import { Bar, Doughnut } from 'react-chartjs-2';
 import { PropTypes } from 'prop-types';
-import {getRandomColor} from '../../helpers/utils';
+import { getRandomColor } from '../../helpers/utils';
 
 const Chart = (props) => {
 	const { label, type, xValues, yValues } = props;
-    const colorArray =  xValues.map(()=>(getRandomColor()))
+	const colorArray = xValues.map(() => getRandomColor());
 	const data = {
 		labels: xValues,
 		datasets: [
 			{
 				label: label,
 				data: yValues,
-				backgroundColor: [
-                    ...colorArray
-					,
-				],
-				borderColor: [
-					...colorArray
-				],
+				backgroundColor: [...colorArray],
+				borderColor: [...colorArray],
 				borderWidth: 1,
 			},
 		],

@@ -29,9 +29,7 @@ function Dashboard() {
 					<Grid.Column width={13}>
 						<div className="dashboard-content">
 							<Segment className="top-bar">
-								<DateSelector
-									dateRange={dateRange}
-								/>
+								<DateSelector dateRange={dateRange} />
 							</Segment>
 							<Grid>
 								<Grid.Row>

@@ -65,7 +65,7 @@ function isValidEmail(email) {
 
 // Check if password have length of 5
 function isValidPassword(pwd) {
-    return pwd.length >= 5;
+	return pwd.length >= 5;
 }
 
 const storage = {
@@ -74,4 +74,10 @@ const storage = {
 	unset,
 };
 
-export { storage, convertUnderScoreToSpace, getRandomColor, isValidEmail, isValidPassword };
+export {
+	storage,
+	convertUnderScoreToSpace,
+	getRandomColor,
+	isValidEmail,
+	isValidPassword,
+};

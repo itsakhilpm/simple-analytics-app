@@ -6,21 +6,21 @@ import { storage } from '../../../helpers/utils';
 import { useHistory } from 'react-router-dom';
 
 function Header() {
-    const history = useHistory();
-    const dispatch = useDispatch();
+	const history = useHistory();
+	const dispatch = useDispatch();
 	const userAuthenticated = useSelector(
 		(state) => state.user.userAuthenticated
 	);
-    const logOutUser =() =>{
-        dispatch({
-            payload:{
-                authorizationDone:false,
-            },
-            type: 'USER_LOGGED_IN',
-        })
-        storage.unset('authToken', 'local');
-        history.push('/login');
-    }
+	const logOutUser = () => {
+		dispatch({
+			payload: {
+				authorizationDone: false,
+			},
+			type: 'USER_LOGGED_IN',
+		});
+		storage.unset('authToken', 'local');
+		history.push('/login');
+	};
 	return (
 		<div className="top-nav">
 			<Menu secondary>
@@ -33,7 +33,14 @@ function Header() {
 								<Link to="/login">Login</Link>
 							</Menu.Item>
 						) : (
-							<Menu.Item name="logout" onClick={()=>{logOutUser()}}>Logout</Menu.Item>
+							<Menu.Item
+								name="logout"
+								onClick={() => {
+									logOutUser();
+								}}
+							>
+								Logout
+							</Menu.Item>
 						)}
 					</Menu.Menu>
 				</Container>

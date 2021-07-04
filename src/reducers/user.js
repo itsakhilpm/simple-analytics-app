@@ -1,9 +1,9 @@
-const user = (state = {userAuthenticated:false}, action) => {
+const user = (state = { userAuthenticated: false }, action) => {
 	switch (action.type) {
 		case 'USER_LOGGED_IN':
 			return {
 				...state,
-                userAuthenticated:action.payload.authorizationDone,
+				userAuthenticated: action.payload.authorizationDone,
 			};
 		default:
 			return state;

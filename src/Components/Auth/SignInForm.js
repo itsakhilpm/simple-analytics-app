@@ -12,7 +12,7 @@ function SignInForm() {
 		emailId: '',
 		isEmailValid: true,
 	});
-    const [isCredentialsWrong, setIsCredentialsWrong] = useState(false);
+	const [isCredentialsWrong, setIsCredentialsWrong] = useState(false);
 
 	const [passwordObj, setPasswordObj] = useState({
 		password: '',
@@ -26,9 +26,9 @@ function SignInForm() {
 	const handleFormSubmit = () => {
 		dispatch(
 			userSignIn(emailObj.emailId, passwordObj.password, rememberMe)
-		).catch((error)=>{
-            setIsCredentialsWrong(true);
-        });
+		).catch((error) => {
+			setIsCredentialsWrong(true);
+		});
 	};
 	const handleInputChange = (e) => {
 		const {
@@ -52,7 +52,7 @@ function SignInForm() {
 		const {
 			target: { value, name },
 		} = e;
-        setIsCredentialsWrong(false);
+		setIsCredentialsWrong(false);
 		switch (name) {
 			case 'email':
 				const isEmailValid = isValidEmail(value);
@@ -129,7 +129,7 @@ function SignInForm() {
 								Please check the password
 							</p>
 						)}
-                        {isCredentialsWrong && (
+						{isCredentialsWrong && (
 							<p className="error-message">
 								Please check the credentials
 							</p>
