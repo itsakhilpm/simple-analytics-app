@@ -1,19 +1,22 @@
 import React, { useState } from 'react';
 import { Button, Form, Grid, Header } from 'semantic-ui-react';
 import { userSignIn } from '../../actions/user';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { storage } from '../../helpers/utils';
 
 function SignInForm() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const dispatch = useDispatch();
     const history = useHistory();
+    const userAuthenticated = useSelector(state=>state.user.userAuthenticated);
 	const handleFormSubmit = () => {
-		dispatch(userSignIn(email, password)).then(()=>{
-            history.push('/dashboard')
-        });
+		dispatch(userSignIn(email, password))
 	};
+    if(userAuthenticated || storage.get("authToken", "local")){
+        history.push('/dashboard')
+    }
 	return (
         <section>
 		<Grid textAlign='center' verticalAlign='middle'>

@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Grid, Segment } from 'semantic-ui-react';
 
@@ -29,13 +29,19 @@ function Dashboard() {
 					<Grid.Column width={13}>
 						<div className="dashboard-content">
 							<Segment className="top-bar">
-								<DateSelector dateRange={dateRange} />
+								<DateSelector
+									dateRange={dateRange}
+								/>
 							</Segment>
 							<Grid>
 								<Grid.Row>
 									{dataforFirst && dataforFirst.length && (
 										<Grid.Column width={16}>
 											<Segment className="mb-3">
+												<h3>
+													{' '}
+													Publishers vs Impressions
+												</h3>
 												<Chart
 													xValues={dataforFirst.map(
 														(i) =>
@@ -58,6 +64,11 @@ function Dashboard() {
 									{dataforSecond && dataforSecond.length && (
 										<Grid.Column width={16}>
 											<Segment className="mb-3">
+												<h3>
+													{' '}
+													App sites vs Impressions
+												</h3>
+
 												<Chart
 													xValues={dataforSecond.map(
 														(i) =>
@@ -80,6 +91,12 @@ function Dashboard() {
 									{dataForThird && dataForThird.length && (
 										<Grid.Column width={8}>
 											<Segment className="mb-3">
+												<h3>
+													{' '}
+													Advertisers vs CM001
+													percentage
+												</h3>
+
 												<Chart
 													xValues={dataForThird.map(
 														(i) =>
@@ -101,7 +118,6 @@ function Dashboard() {
 								</Grid.Row>
 							</Grid>
 						</div>
-						<p>Dashboard text</p>
 					</Grid.Column>
 				</Grid.Row>
 			</Grid>

@@ -8,9 +8,16 @@ import {
 const actionTypes = {
 	DATE_RANGE_FETCHED: 'DATE_RANGE_FETCHED',
 	CHART_DATA_FETCHED: 'CHART_DATA_FETCHED',
+    LOADER:'LOADER',
 };
 
 const getDateRange = (requestObj) => (dispatch) => {
+    dispatch({
+        payload:{
+            loading:true,
+        },
+        type:actionTypes.LOADER,
+    })
 	return http.post(`/api/v1/getDateRange`, requestObj).then((data) => {
 		const { result } = data;
 		dispatch({
@@ -34,7 +41,14 @@ const getDateRange = (requestObj) => (dispatch) => {
 				requestPayloadThree
 			)
 		);
-	});
+	}).catch(()=>{
+        dispatch({
+            payload:{
+                loading:false,
+            },
+            type:actionTypes.LOADER,
+        })
+    });
 };
 const fetchChartData = (reqOneObj, reqTwoObj, reqThreeObj) => (dispatch) => {
 	const url = `/api/v1/getData`;
@@ -60,8 +74,21 @@ const fetchChartData = (reqOneObj, reqTwoObj, reqThreeObj) => (dispatch) => {
 					type: actionTypes.CHART_DATA_FETCHED,
 				});
 			}
+            dispatch({
+                payload:{
+                    loading:false,
+                },
+                type:actionTypes.LOADER,
+            })
 		})
-		.catch((error) => {});
+		.catch((error) => {
+            dispatch({
+                payload:{
+                    loading:false,
+                },
+                type:actionTypes.LOADER,
+            })
+        });
 };
 
 export { getDateRange, fetchChartData };

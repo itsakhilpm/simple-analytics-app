@@ -1,4 +1,4 @@
-const dashboard = (state={graphData:[]}, action) =>{
+const dashboard = (state={graphData:[], loader:false}, action) =>{
     switch (action.type) {
 		case 'CHART_DATA_FETCHED':
             const {
@@ -24,6 +24,12 @@ const dashboard = (state={graphData:[]}, action) =>{
                     endDate,
                 }
             }
+        case 'LOADER':
+            return {
+                ...state,
+                loading:action.payload.loading,
+            }
+
 		default:
 			return state;
 	}

@@ -12,10 +12,15 @@ import {
 	requestPayloadThree,
 } from '../../helpers/constants';
 
+const actionTypes = {
+    LOADER: 'LOADER'
+};
+
 function DateSelector(props) {
 	const { dateRange } = props;
 	const dispatch = useDispatch();
-	const [showDatePicker, setShowDatePicker] = useState(false);
+    const [showDatePicker, setShowDatePicker] = useState(false);
+
 	const [selectionRange, setSelectionRange] = useState({
 		startDate: new Date(),
 		endDate: new Date(),
@@ -40,6 +45,7 @@ function DateSelector(props) {
 			key: 'selection',
 		});
 		if (startDate.getTime() !== endDate.getTime()) {
+            setShowDatePicker(false);
 			const newDateRange = {
 				startDate: startDate.getTime().toString(),
 				endDate: endDate.getTime().toString(),
@@ -48,6 +54,12 @@ function DateSelector(props) {
 			requestPayloadTwo.chartObject.requestParam.dateRange = newDateRange;
 			requestPayloadThree.chartObject.requestParam.dateRange =
 				newDateRange;
+                dispatch({
+                    payload:{
+                        loading:true,
+                    },
+                    type:actionTypes.LOADER,
+                })
 			dispatch(
 				fetchChartData(
 					requestPayloadOne,
@@ -58,7 +70,7 @@ function DateSelector(props) {
 		}
 	};
 	return (
-		<span>
+		<span className="calender-wrapper">
 			Select date range{' '}
 			<Icon
 				name="calendar alternate"
@@ -68,6 +80,7 @@ function DateSelector(props) {
 			/>
 			{showDatePicker && (
 				<DateRangePicker
+                    color='#58b9ed'
 					ranges={[selectionRange]}
 					onChange={handleSelect}
 					minDate={new Date(Number(dateRange.startDate))}
